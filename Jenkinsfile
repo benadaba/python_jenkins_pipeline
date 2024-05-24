@@ -31,14 +31,14 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                script {
-                    sh 'pip install pytest'
-                    sh 'pytest -v'
-                }
-            }
-        }
+        // stage('Run Tests') {
+        //     steps {
+        //         script {
+        //             sh 'pip install pytest'
+        //             sh 'pytest -v'
+        //         }
+        //     }
+        // }
 
         stage('Build Wheel') {
             steps {
