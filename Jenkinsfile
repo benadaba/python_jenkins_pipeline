@@ -53,5 +53,21 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/*.whl', fingerprint: true
             }
         }
+
+        stage('Install Wheel') {
+            steps {
+                script {
+                    sh 'pip install dist/*.whl'
+                }
+            }
+        }
+
+        stage('Run Application') {
+            steps {
+                script {
+                    sh 'nohup run-app &'
+                }
+            }
+        }
     }
 }
