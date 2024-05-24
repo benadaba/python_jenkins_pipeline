@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/benadaba/python_jenkins_pipeline.git'
+                git branch: 'main', url: 'https://github.com/benadaba/python_jenkins_pipeline.git'
             }
         }
         
