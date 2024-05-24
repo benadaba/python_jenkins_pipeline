@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     sh 'pip install pytest'
-                    sh 'pytest'
+                    sh 'pytest -v'
                 }
             }
         }
