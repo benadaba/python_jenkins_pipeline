@@ -31,3 +31,7 @@ jenkins:100000:65536
 ------------------
 podman system migrate
 
+
+
+### TASKS
+1. build the python application which has been developed by our Developers
