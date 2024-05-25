@@ -75,7 +75,8 @@ pipeline {
  stage('Build Docker Image') {
             steps {
                 script {
-                    DOCKER_IMAGE = docker.build("${DOCKERHUB_REPO}:${env.BUILD_ID}")
+                    // DOCKER_IMAGE = docker.build("${DOCKERHUB_REPO}:${env.BUILD_ID}")
+                    DOCKER_IMAGE =  sh(script: "sudo docker build -t ${DOCKERHUB_REPO}:${env.BUILD_ID} .", returnStdout: true).trim()
                 }
             }
         }
