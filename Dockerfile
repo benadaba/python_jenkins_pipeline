@@ -10,7 +10,7 @@ COPY requirements.txt requirements.txt
 
 # Install the required dependencies
 # RUN pip install --upgrade pip -y
-RUN pip install -y -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy the rest of the application code
 COPY . .
