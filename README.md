@@ -10,6 +10,24 @@ First, ensure that the Docker Pipeline Plugin is installed in your Jenkins insta
 3. Installing it if it’s not already installed.
 
 ___________________
-#Add jenkins to the docker group
+#Add jenkins to the docker group  
 sudo groupadd docker
 sudo usermod -aG docker jenkins
+
+---------------------------
+#update 
+sudo -i
+echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+#open this file and the next data in that file if not already added  
+sudo vi  /etc/subuid 
+jenkins:100000:65536
+
+#open the next file and the next data in that file if not already added  
+sudo vi  /etc/subgid  
+jenkins:100000:65536
+
+
+------------------
+podman system migrate
+
