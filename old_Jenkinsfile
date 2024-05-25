@@ -80,6 +80,17 @@ pipeline {
             }
         }
 
+        stage('deploy to standalone ec2 server') {
+            steps {
+                script {
+                    // sh 'scp -i "keypair" dist/*.whl 178.434.3434:/opt/flask-app-directory/'
+                    // sh 'scp -i "keypair" * .whl 178.434.3434:/opt/flask-app-directory/'
+                    sh 'echo "deploying to ec2 instance"'
+
+                }
+            }
+        }
+
         // stage('Run Application') {
         //     steps {
         //         script {
@@ -96,24 +107,24 @@ pipeline {
             }
         }
 
-        // stage('Push Docker Image') {
-        //     steps {
-        //         // script {
-        //         //     docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS_ID) {
-        //         //         DOCKER_IMAGE.push()
-        //         //         DOCKER_IMAGE.push('latest')
-        //         //     }
-        //         // }
-        //          script {
-        //             withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-        //                 sh 'echo $DOCKER_PASSWORD | sudo docker login -u $DOCKER_USERNAME --password-stdin'
-        //                 // sh "sudo docker push ${DOCKERHUB_REPO}:${env.BUILD_ID}"
-        //                 sh "sudo docker tag ${DOCKERHUB_REPO}:${env.BUILD_ID}"
-        //                 sh "sudo docker push ${DOCKERHUB_REPO}:${env.BUILD_ID}"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Push Docker Image') {
+            steps {
+                // script {
+                //     docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS_ID) {
+                //         DOCKER_IMAGE.push()
+                //         DOCKER_IMAGE.push('latest')
+                //     }
+                // }
+                 script {
+                    withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh 'echo $DOCKER_PASSWORD | sudo docker login -u $DOCKER_USERNAME --password-stdin'
+                        // sh "sudo docker push ${DOCKERHUB_REPO}:${env.BUILD_ID}"
+                        sh "sudo docker tag ${DOCKERHUB_REPO}:${env.BUILD_ID}"
+                        sh "sudo docker push ${DOCKERHUB_REPO}:${env.BUILD_ID}"
+                    }
+                }
+            }
+        }
         
         // stage('Run Docker Container') {
         //     steps {

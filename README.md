@@ -32,6 +32,12 @@ jenkins:100000:65536
 podman system migrate
 
 
+----------------------------
+### sonarqube scanning
+install the SonarQube Plugin
+1. 
+
+
 
 ### TASKS
 1. build the python application which has been developed by our Developers
