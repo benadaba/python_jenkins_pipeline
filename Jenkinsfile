@@ -4,6 +4,9 @@ pipeline {
     environment {
         VIRTUAL_ENV = "${env.WORKSPACE}/venv"
         PATH = "${env.VIRTUAL_ENV}/bin:${env.PATH}"
+        DOCKER_IMAGE = ""
+        DOCKER_CREDENTIALS_ID = 'dockerhub'
+        DOCKERHUB_REPO = 'benadabankah/flask-app'
     }
 
     stages {
@@ -62,10 +65,36 @@ pipeline {
             }
         }
 
-        stage('Run Application') {
+        // stage('Run Application') {
+        //     steps {
+        //         script {
+        //             sh 'nohup run-app &'
+        //         }
+        //     }
+        // }
+ stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'nohup run-app &'
+                    DOCKER_IMAGE = docker.build("${DOCKERHUB_REPO}:${env.BUILD_ID}")
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                        DOCKER_IMAGE.push()
+                        DOCKER_IMAGE.push('latest')
+                    }
+                }
+            }
+        }
+        
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    DOCKER_IMAGE.run('-p 5000:5000')
                 }
             }
         }
